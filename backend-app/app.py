@@ -26,7 +26,7 @@ jwt = JWTManager(app)
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_DB'] = 'plantInfo-db'
+app.config['MYSQL_DATABASE_DB'] = 'api_contract'
 mysql.init_app(app)
 
 # ----------------------------------------------------- #
@@ -36,7 +36,7 @@ mysql.init_app(app)
 def login():
     sql_connect = mysql.connect()
     cursor = sql_connect.cursor(pymysql.cursors.DictCursor)
-    request_json = request.json
+    request_json = request.form
 
     if request.method == "POST":
         email = request_json["email"]
@@ -83,7 +83,7 @@ def login():
 def register():
     sql_connect = mysql.connect()
     cursor = sql_connect.cursor(pymysql.cursors.DictCursor)
-    request_json = request.json
+    request_json = request.form
 
     if request.method == "POST":
         name = request_json["name"]
@@ -118,7 +118,7 @@ def users_id(id):
     cursor = sql_connect.cursor(pymysql.cursors.DictCursor)
 
     if request.method == "PATCH":
-        request_json = request.json
+        request_json = request.form
         foto = request_json["foto"]
 
         SQLCommand = "UPDATE users SET foto=%s WHERE id=%s"
@@ -171,7 +171,7 @@ def users_id(id):
 def get_UserPlant(id):
     sql_connect = mysql.connect()
     cursor = sql_connect.cursor(pymysql.cursors.DictCursor)
-    cursor.execute("SELECT * FROM userplant")
+    cursor.execute("SELECT * FROM userplant WHERE id=%s", id)
 
     api_result = cursor.fetchall()
 
@@ -205,7 +205,7 @@ def get_UserPlant(id):
 def UserPlant_post():
     sql_connect = mysql.connect()
     cursor = sql_connect.cursor(pymysql.cursors.DictCursor)
-    request_json = request.json
+    request_json = request.form
 
     if request.method == "POST":
         location = request_json["location"]
@@ -285,7 +285,7 @@ def UserPlant_getpatchdel(id):
         return api_response
         
     if request.method == "PATCH":
-        request_json = request.json
+        request_json = request.form
 
         location = request_json["location"]
         disease = request_json["disease"]
@@ -336,14 +336,14 @@ def get_plant():
             "wateringTips": row["wateringTips"], 
             "wateringFrequency": row["wateringFrequency"], 
             "temperature": row["temperature"], 
-            "image": row["image"], 
+            "image": [row["image"]]
         }
         items.append(disease_object)
 
     result = {
         "error": False,
         "message": "success",
-        "diseaseList": items
+        "plantList": items
     }
             
     api_response = jsonify(result)
@@ -359,11 +359,6 @@ def get_slug_plant(slug):
 
     api_result = cursor.fetchall()
 
-    array_images = []
-
-    for image_string in api_result:
-        array_images.append(image_string['image'])
-
     result = {}
 
     for row in api_result:
@@ -376,12 +371,12 @@ def get_slug_plant(slug):
         result["wateringTips"] = row["wateringTips"]
         result["wateringFrequency"] = row["wateringFrequency"]
         result["temperature"] = row["temperature"]
-        result["image"] = array_images
+        result["image"] = [row["image"]]
 
     result_ = {
         "error": False,
         "message": "success",
-        "diseaseResult": result
+        "plantResult": result
     }
 
     api_response = jsonify(result_)
