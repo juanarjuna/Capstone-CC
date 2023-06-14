@@ -1,10 +1,19 @@
-FROM python:3.9-slim
+FROM python:3.9
+
+ENV PORT 8080
+ENV HOST 0.0.0.0
+
+EXPOSE 8080
+
+RUN apt-get update -y && \
+    apt-get install -y python3-pip
+
+COPY ./requirements.txt /app/requirements.txt
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-COPY . .
+COPY . /app
 
-CMD ["python", "app.py"]
+ENTRYPOINT ["python", "app.py"]
