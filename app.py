@@ -26,9 +26,9 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=3)
 jwt = JWTManager(app)
 
 #DB - localhost
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_HOST'] = '34.122.190.73'
+app.config['MYSQL_DATABASE_USER'] = 'ranoviq'
+app.config['MYSQL_DATABASE_PASSWORD'] = '12345'
 app.config['MYSQL_DATABASE_DB'] = 'api_contract'
 mysql.init_app(app)
 
