@@ -29,7 +29,7 @@ jwt = JWTManager(app)
 app.config['MYSQL_DATABASE_HOST'] = '34.122.190.73'
 app.config['MYSQL_DATABASE_USER'] = 'ranoviq'
 app.config['MYSQL_DATABASE_PASSWORD'] = '12345'
-app.config['MYSQL_DATABASE_DB'] = 'api_contract'
+app.config['MYSQL_DATABASE_DB'] = 'sprout'
 mysql.init_app(app)
 
 # ----------------------------------------------------- #
