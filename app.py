@@ -18,6 +18,7 @@ app = Flask(__name__)
 CORS(app)
 mysql = MySQL(app)
 
+
 UPLOAD_FOLDER = 'uploads'  # Folder to store uploaded files
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #JWT Config
