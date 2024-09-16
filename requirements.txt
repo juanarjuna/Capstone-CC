@@ -1,0 +1,6 @@
+flask
+flask-mysql
+flask-cors
+Flask-JWT-Extended
+datetime
+werkzeug

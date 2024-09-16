@@ -18,6 +18,7 @@ app = Flask(__name__)
 CORS(app)
 mysql = MySQL(app)
 
+
 UPLOAD_FOLDER = 'uploads'  # Folder to store uploaded files
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #JWT Config
@@ -26,10 +27,10 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=3)
 jwt = JWTManager(app)
 
 #DB - localhost
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
-app.config['MYSQL_DATABASE_DB'] = 'api_contract'
+app.config['MYSQL_DATABASE_HOST'] = '34.122.190.73'
+app.config['MYSQL_DATABASE_USER'] = 'ranoviq'
+app.config['MYSQL_DATABASE_PASSWORD'] = '12345'
+app.config['MYSQL_DATABASE_DB'] = 'sprout'
 mysql.init_app(app)
 
 # ----------------------------------------------------- #
@@ -525,4 +526,4 @@ def uploaded_file(filename):
     app.debug = True
 
 if __name__ == "__main__":
-    app.run(threaded=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 80)))
